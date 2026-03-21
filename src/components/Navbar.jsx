@@ -19,7 +19,7 @@ export default function Navbar() {
     <nav className="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link to="/movies" className="text-amber-400 font-bold text-lg tracking-tight">
-          🎬 MyBasement
+          🎬 Bacchus
         </Link>
         <div className="flex items-center gap-6">
           <NavLink to="/movies" className={linkClass}>Movies</NavLink>

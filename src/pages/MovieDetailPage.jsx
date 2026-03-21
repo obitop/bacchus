@@ -1,23 +1,36 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { getMovie, deleteMovie } from '../api'
+import { getMovie, deleteMovie ,getMovieShowTimes} from '../api'
 import { useAuth } from '../AuthContext'
 import Spinner from '../components/Spinner'
 import ErrorMsg from '../components/ErrorMsg'
+
+function formatDate(str) {
+  if (!str) return '—'
+  const d = new Date(str)
+  return isNaN(d) ? str : d.toLocaleString()
+}
 
 export default function MovieDetailPage() {
   const { id } = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
   const [movie, setMovie] = useState(null)
+  const [showTimes, setShowTimes] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
     getMovie(id)
-      .then(setMovie)
+      .then(({data})=> setMovie(data.movie))
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false))
+
+    // Optionally, fetch showtimes for this movie
+    getMovieShowTimes(id)
+      .then(({data}) => setShowTimes(data.showtimes || []))
+      .catch((e) => console.error("Failed to fetch showtimes for movie", { id, error: e }))
+
   }, [id])
 
   async function handleDelete() {
@@ -73,6 +86,33 @@ export default function MovieDetailPage() {
           </div>
         )}
       </div>
+
+
+
+      <div className="space-y-3 mt-8">
+        {showTimes.map((st) => (
+          <Link
+            key={st.id}
+            to={`/showtimes/${st.id}`}
+            className="flex items-center justify-between bg-zinc-900 border border-zinc-800 rounded-xl px-5 py-4 hover:border-zinc-600 transition-all group"
+          >
+            <div>
+              <p className="font-medium text-zinc-100 group-hover:text-amber-400 transition-colors">
+                {st.cinema?.name || `Cinema #${st.cinema?.id || '—'}`}
+              </p>
+              <p className="text-sm text-zinc-500 mt-0.5">{formatDate(st.display_date)}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-amber-400 font-semibold">
+                {st.price != null ? `$${Number(st.price).toFixed(2)}` : '—'}
+              </p>
+              <p className="text-xs text-zinc-600 mt-0.5">ID #{st.id}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+
       <div className="mt-4">
         <Link
           to="/showtimes"

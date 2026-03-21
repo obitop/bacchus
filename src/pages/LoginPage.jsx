@@ -20,10 +20,12 @@ export default function LoginPage() {
     }
     setLoading(true)
     try {
-      const data = await loginApi(form.email, form.password)
+      const res = await loginApi(form.email, form.password)
       // API returns token + user info; handle various response shapes
-      const token = data?.token || data?.access_token || ''
-      const user = data?.user || { email: form.email }
+      console.log('Api login reesponse', { res })
+      const token = res.data?.token || res?.access_token || ''
+      const user = res?.data?.user || { email: form.email }
+      console.log("logging in user: ", user)
       login(token, user)
       navigate('/movies')
     } catch (e) {
