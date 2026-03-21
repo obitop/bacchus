@@ -1,0 +1,2813 @@
+{
+  "openapi" : "3.0.4",
+  "info" : {
+    "title" : "Swagger Petstore - OpenAPI 3.0",
+    "description" : "Movie Reservation for sigmas",
+    "termsOfService" : "https://swagger.io/terms/",
+    "contact" : {
+      "email" : "apiteam@swagger.io"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Swagger",
+    "url" : "https://swagger.io"
+  },
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/mybasement/movie-reservation/1.0.0"
+  }, {
+    "url" : "https://petstore3.swagger.io/api/v3"
+  } ],
+  "tags" : [ {
+    "name" : "pet",
+    "description" : "Everything about your Pets",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://swagger.io"
+    }
+  }, {
+    "name" : "store",
+    "description" : "Access to Petstore orders",
+    "externalDocs" : {
+      "description" : "Find out more about our store",
+      "url" : "https://swagger.io"
+    }
+  }, {
+    "name" : "user",
+    "description" : "Operations about user"
+  } ],
+  "paths" : {
+    "/user/{username}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get user by user name.",
+        "description" : "Get user detail based on username.",
+        "operationId" : "getUserByName",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be fetched. Use user1 for testing",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid username supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Update user resource.",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "updateUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Update an existent user in the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            },
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "User not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Delete user resource.",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "deleteUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User deleted"
+          },
+          "400" : {
+            "description" : "Invalid username supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies" : {
+      "get" : {
+        "summary" : "Get movies",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "len" : {
+                      "type" : "integer"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "movies" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "integer"
+                              },
+                              "imdb_id" : {
+                                "type" : "string"
+                              },
+                              "title" : {
+                                "type" : "string"
+                              },
+                              "description" : {
+                                "type" : "string"
+                              },
+                              "genre" : {
+                                "type" : "string"
+                              },
+                              "duration" : {
+                                "type" : "string"
+                              },
+                              "createdAt" : {
+                                "type" : "string"
+                              },
+                              "updatedAt" : {
+                                "type" : "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "len" : 1,
+                      "data" : {
+                        "movies" : [ {
+                          "id" : 1,
+                          "imdb_id" : "tt0137523",
+                          "title" : "fight club",
+                          "description" : "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
+                          "genre" : "horror",
+                          "duration" : "129",
+                          "createdAt" : "2026-02-23T02:38:52.325Z",
+                          "updatedAt" : "2026-02-23T02:38:52.325Z"
+                        } ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "get-movies",
+        "description" : "Gets all movies, authentication unknown for now"
+      },
+      "post" : {
+        "summary" : "Create movie",
+        "tags" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "movie" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "integer"
+                            },
+                            "imdb_id" : {
+                              "type" : "string"
+                            },
+                            "title" : {
+                              "type" : "string"
+                            },
+                            "description" : {
+                              "type" : "string"
+                            },
+                            "genre" : {
+                              "type" : "string"
+                            },
+                            "duration" : {
+                              "type" : "integer"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            },
+                            "updatedAt" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "message" : "Movie Created Successfully",
+                      "data" : {
+                        "movie" : {
+                          "id" : 5,
+                          "imdb_id" : "tt0081505",
+                          "title" : "the shinning",
+                          "description" : "A family heads to an isolated hotel for the winter, where a sinister presence influences the father into violence. At the same time, his psychic son sees horrifying forebodings from both the past and the future.",
+                          "genre" : "horror",
+                          "duration" : 146,
+                          "createdAt" : "2026-03-21T00:13:24.092Z",
+                          "updatedAt" : "2026-03-21T00:13:24.092Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "post-movies",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Movie"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{movie_id}" : {
+      "parameters" : [ {
+        "schema" : {
+          "type" : "string"
+        },
+        "name" : "movie_id",
+        "in" : "path",
+        "required" : true,
+        "description" : "movie id"
+      } ],
+      "get" : {
+        "summary" : "Get a movie",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "movie" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "integer"
+                            },
+                            "imdb_id" : {
+                              "type" : "string"
+                            },
+                            "title" : {
+                              "type" : "string"
+                            },
+                            "description" : {
+                              "type" : "string"
+                            },
+                            "genre" : {
+                              "type" : "string"
+                            },
+                            "duration" : {
+                              "type" : "string"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            },
+                            "updatedAt" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "data" : {
+                        "movie" : {
+                          "id" : 1,
+                          "imdb_id" : "tt0137523",
+                          "title" : "fight club",
+                          "description" : "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
+                          "genre" : "horror",
+                          "duration" : "129",
+                          "createdAt" : "2026-02-23T02:38:52.325Z",
+                          "updatedAt" : "2026-02-23T02:38:52.325Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "get-movies-id"
+      },
+      "delete" : {
+        "summary" : "Delete a movie",
+        "tags" : [ ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "operationId" : "delete-movies-id"
+      }
+    },
+    "/showtimes" : {
+      "get" : {
+        "summary" : "Get showtimes",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "len" : {
+                      "type" : "integer"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "showtimes" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "integer"
+                              },
+                              "cinema" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "id" : {
+                                    "type" : "integer"
+                                  },
+                                  "name" : {
+                                    "type" : "string"
+                                  },
+                                  "numOfRows" : {
+                                    "type" : "string"
+                                  },
+                                  "seatsPerRow" : {
+                                    "type" : "string"
+                                  },
+                                  "close_time" : {
+                                    "type" : "string"
+                                  },
+                                  "owner" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              },
+                              "display_date" : {
+                                "type" : "string"
+                              },
+                              "price" : {
+                                "type" : "number"
+                              },
+                              "createdAt" : {
+                                "type" : "string"
+                              },
+                              "updatedAt" : {
+                                "type" : "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "len" : 2,
+                      "data" : {
+                        "showtimes" : [ {
+                          "id" : 1,
+                          "cinema" : {
+                            "id" : 2,
+                            "name" : "collesium",
+                            "numOfRows" : "5",
+                            "seatsPerRow" : "10",
+                            "close_time" : "2026-02-20",
+                            "owner" : "tarek"
+                          },
+                          "display_date" : "2026-02-23",
+                          "price" : 2000.2,
+                          "createdAt" : "2026-02-23T02:41:45.898Z",
+                          "updatedAt" : "2026-02-23T02:41:45.898Z"
+                        }, {
+                          "id" : 2,
+                          "cinema" : {
+                            "id" : 5,
+                            "name" : "necrosis",
+                            "numOfRows" : "5",
+                            "seatsPerRow" : "10",
+                            "close_time" : "2026-02-20",
+                            "owner" : "tarek"
+                          },
+                          "display_date" : "2026-02-23",
+                          "price" : 3000.2,
+                          "createdAt" : "2026-02-23T21:14:44.752Z",
+                          "updatedAt" : "2026-02-23T21:14:44.752Z"
+                        } ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "get-showtimes"
+      },
+      "post" : {
+        "summary" : "Create showtime",
+        "tags" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "newShowTime" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "integer"
+                            },
+                            "movie" : {
+                              "type" : "integer"
+                            },
+                            "cinema" : {
+                              "type" : "integer"
+                            },
+                            "display_date" : {
+                              "type" : "string"
+                            },
+                            "price" : {
+                              "type" : "number"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            },
+                            "updatedAt" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "data" : {
+                        "newShowTime" : {
+                          "id" : 3,
+                          "movie" : 1,
+                          "cinema" : 2,
+                          "display_date" : "2026-02-23T02:38:52.325Z",
+                          "price" : 2000.2,
+                          "createdAt" : "2026-03-21T00:14:20.771Z",
+                          "updatedAt" : "2026-03-21T00:14:20.771Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "post-showtimes",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Show-Time"
+              }
+            }
+          }
+        },
+        "description" : "Creat a showtime for a certain movie, probabably gonna be admin "
+      }
+    },
+    "/showtimes/{showTime_id}" : {
+      "get" : {
+        "summary" : "Get a showtime",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "showTime" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "integer"
+                            },
+                            "cinema" : {
+                              "type" : "object",
+                              "properties" : {
+                                "id" : {
+                                  "type" : "integer"
+                                },
+                                "name" : {
+                                  "type" : "string"
+                                },
+                                "numOfRows" : {
+                                  "type" : "string"
+                                },
+                                "seatsPerRow" : {
+                                  "type" : "string"
+                                },
+                                "seats" : {
+                                  "type" : "array",
+                                  "items" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "id" : {
+                                        "type" : "integer"
+                                      },
+                                      "row" : {
+                                        "type" : "string"
+                                      },
+                                      "col" : {
+                                        "type" : "string"
+                                      },
+                                      "state" : {
+                                        "type" : "string"
+                                      },
+                                      "type" : {
+                                        "type" : "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "close_time" : {
+                                  "type" : "string"
+                                },
+                                "owner" : {
+                                  "type" : "string"
+                                }
+                              }
+                            },
+                            "display_date" : {
+                              "type" : "string"
+                            },
+                            "price" : {
+                              "type" : "number"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            },
+                            "updatedAt" : {
+                              "type" : "string"
+                            },
+                            "seats" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "id" : {
+                                    "type" : "integer"
+                                  },
+                                  "row" : {
+                                    "type" : "string"
+                                  },
+                                  "col" : {
+                                    "type" : "string"
+                                  },
+                                  "state" : {
+                                    "type" : "string"
+                                  },
+                                  "type" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "data" : {
+                        "showTime" : {
+                          "id" : 2,
+                          "cinema" : {
+                            "id" : 5,
+                            "name" : "necrosis",
+                            "numOfRows" : "5",
+                            "seatsPerRow" : "10",
+                            "seats" : [ {
+                              "id" : 52,
+                              "row" : "0",
+                              "col" : "1",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 53,
+                              "row" : "0",
+                              "col" : "2",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 54,
+                              "row" : "0",
+                              "col" : "3",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 55,
+                              "row" : "0",
+                              "col" : "4",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 57,
+                              "row" : "0",
+                              "col" : "6",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 58,
+                              "row" : "0",
+                              "col" : "7",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 60,
+                              "row" : "0",
+                              "col" : "9",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 61,
+                              "row" : "1",
+                              "col" : "0",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 62,
+                              "row" : "1",
+                              "col" : "1",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 63,
+                              "row" : "1",
+                              "col" : "2",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 64,
+                              "row" : "1",
+                              "col" : "3",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 65,
+                              "row" : "1",
+                              "col" : "4",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 66,
+                              "row" : "1",
+                              "col" : "5",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 67,
+                              "row" : "1",
+                              "col" : "6",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 68,
+                              "row" : "1",
+                              "col" : "7",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 69,
+                              "row" : "1",
+                              "col" : "8",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 70,
+                              "row" : "1",
+                              "col" : "9",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 71,
+                              "row" : "2",
+                              "col" : "0",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 72,
+                              "row" : "2",
+                              "col" : "1",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 73,
+                              "row" : "2",
+                              "col" : "2",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 74,
+                              "row" : "2",
+                              "col" : "3",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 75,
+                              "row" : "2",
+                              "col" : "4",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 76,
+                              "row" : "2",
+                              "col" : "5",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 77,
+                              "row" : "2",
+                              "col" : "6",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 78,
+                              "row" : "2",
+                              "col" : "7",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 79,
+                              "row" : "2",
+                              "col" : "8",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 80,
+                              "row" : "2",
+                              "col" : "9",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 81,
+                              "row" : "3",
+                              "col" : "0",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 82,
+                              "row" : "3",
+                              "col" : "1",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 83,
+                              "row" : "3",
+                              "col" : "2",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 84,
+                              "row" : "3",
+                              "col" : "3",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 85,
+                              "row" : "3",
+                              "col" : "4",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 86,
+                              "row" : "3",
+                              "col" : "5",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 87,
+                              "row" : "3",
+                              "col" : "6",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 88,
+                              "row" : "3",
+                              "col" : "7",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 89,
+                              "row" : "3",
+                              "col" : "8",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 90,
+                              "row" : "3",
+                              "col" : "9",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 91,
+                              "row" : "4",
+                              "col" : "0",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 93,
+                              "row" : "4",
+                              "col" : "2",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 94,
+                              "row" : "4",
+                              "col" : "3",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 95,
+                              "row" : "4",
+                              "col" : "4",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 96,
+                              "row" : "4",
+                              "col" : "5",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 97,
+                              "row" : "4",
+                              "col" : "6",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 98,
+                              "row" : "4",
+                              "col" : "7",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 99,
+                              "row" : "4",
+                              "col" : "8",
+                              "state" : "free",
+                              "type" : "regular"
+                            }, {
+                              "id" : 100,
+                              "row" : "4",
+                              "col" : "9",
+                              "state" : "free",
+                              "type" : "regular"
+                            } ],
+                            "close_time" : "2026-02-20",
+                            "owner" : "tarek"
+                          },
+                          "display_date" : "2026-02-23",
+                          "price" : 3000.2,
+                          "createdAt" : "2026-02-23T21:14:44.752Z",
+                          "updatedAt" : "2026-02-23T21:14:44.752Z",
+                          "seats" : [ {
+                            "id" : 52,
+                            "row" : "0",
+                            "col" : "1",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 53,
+                            "row" : "0",
+                            "col" : "2",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 54,
+                            "row" : "0",
+                            "col" : "3",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 55,
+                            "row" : "0",
+                            "col" : "4",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 57,
+                            "row" : "0",
+                            "col" : "6",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 58,
+                            "row" : "0",
+                            "col" : "7",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 60,
+                            "row" : "0",
+                            "col" : "9",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 61,
+                            "row" : "1",
+                            "col" : "0",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 62,
+                            "row" : "1",
+                            "col" : "1",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 63,
+                            "row" : "1",
+                            "col" : "2",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 64,
+                            "row" : "1",
+                            "col" : "3",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 65,
+                            "row" : "1",
+                            "col" : "4",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 66,
+                            "row" : "1",
+                            "col" : "5",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 67,
+                            "row" : "1",
+                            "col" : "6",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 68,
+                            "row" : "1",
+                            "col" : "7",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 69,
+                            "row" : "1",
+                            "col" : "8",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 70,
+                            "row" : "1",
+                            "col" : "9",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 71,
+                            "row" : "2",
+                            "col" : "0",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 72,
+                            "row" : "2",
+                            "col" : "1",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 73,
+                            "row" : "2",
+                            "col" : "2",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 74,
+                            "row" : "2",
+                            "col" : "3",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 75,
+                            "row" : "2",
+                            "col" : "4",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 76,
+                            "row" : "2",
+                            "col" : "5",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 77,
+                            "row" : "2",
+                            "col" : "6",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 78,
+                            "row" : "2",
+                            "col" : "7",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 79,
+                            "row" : "2",
+                            "col" : "8",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 80,
+                            "row" : "2",
+                            "col" : "9",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 81,
+                            "row" : "3",
+                            "col" : "0",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 82,
+                            "row" : "3",
+                            "col" : "1",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 83,
+                            "row" : "3",
+                            "col" : "2",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 84,
+                            "row" : "3",
+                            "col" : "3",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 85,
+                            "row" : "3",
+                            "col" : "4",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 86,
+                            "row" : "3",
+                            "col" : "5",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 87,
+                            "row" : "3",
+                            "col" : "6",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 88,
+                            "row" : "3",
+                            "col" : "7",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 89,
+                            "row" : "3",
+                            "col" : "8",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 90,
+                            "row" : "3",
+                            "col" : "9",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 91,
+                            "row" : "4",
+                            "col" : "0",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 93,
+                            "row" : "4",
+                            "col" : "2",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 94,
+                            "row" : "4",
+                            "col" : "3",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 95,
+                            "row" : "4",
+                            "col" : "4",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 96,
+                            "row" : "4",
+                            "col" : "5",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 97,
+                            "row" : "4",
+                            "col" : "6",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 98,
+                            "row" : "4",
+                            "col" : "7",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 99,
+                            "row" : "4",
+                            "col" : "8",
+                            "state" : "free",
+                            "type" : "regular"
+                          }, {
+                            "id" : 100,
+                            "row" : "4",
+                            "col" : "9",
+                            "state" : "free",
+                            "type" : "regular"
+                          } ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "2XX" : {
+            "description" : "Success"
+          }
+        },
+        "operationId" : "get-showtimes-id",
+        "parameters" : [ {
+          "schema" : {
+            "type" : "string"
+          },
+          "in" : "header"
+        } ]
+      },
+      "parameters" : [ {
+        "schema" : {
+          "type" : "string"
+        },
+        "name" : "showTime_id",
+        "in" : "path",
+        "required" : true
+      } ]
+    },
+    "/cinemas" : {
+      "get" : {
+        "summary" : "Get cinemas",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "len" : {
+                      "type" : "integer"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "cinemas" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "integer"
+                              },
+                              "name" : {
+                                "type" : "string"
+                              },
+                              "numOfRows" : {
+                                "type" : "string"
+                              },
+                              "seatsPerRow" : {
+                                "type" : "string"
+                              },
+                              "close_time" : {
+                                "type" : "string"
+                              },
+                              "owner" : {
+                                "type" : "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "len" : 4,
+                      "data" : {
+                        "cinemas" : [ {
+                          "id" : 2,
+                          "name" : "collesium",
+                          "numOfRows" : "5",
+                          "seatsPerRow" : "10",
+                          "close_time" : "2026-02-20",
+                          "owner" : "tarek"
+                        }, {
+                          "id" : 3,
+                          "name" : "great library",
+                          "numOfRows" : "5",
+                          "seatsPerRow" : "10",
+                          "close_time" : "2026-02-20",
+                          "owner" : "tarek"
+                        }, {
+                          "id" : 4,
+                          "name" : "sharp",
+                          "numOfRows" : "5",
+                          "seatsPerRow" : "10",
+                          "close_time" : "2026-02-20",
+                          "owner" : "tarek"
+                        }, {
+                          "id" : 5,
+                          "name" : "necrosis",
+                          "numOfRows" : "5",
+                          "seatsPerRow" : "10",
+                          "close_time" : "2026-02-20",
+                          "owner" : "tarek"
+                        } ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "get-cinemas",
+        "description" : "probably will be admin lattter"
+      },
+      "post" : {
+        "summary" : "Create cinema",
+        "tags" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "post-cinemas",
+        "description" : "Create cinem",
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Cinema"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservations/" : {
+      "get" : {
+        "summary" : "Get all reservations",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "len" : {
+                      "type" : "integer"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "reservations" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "integer"
+                              },
+                              "user" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "id" : {
+                                    "type" : "string"
+                                  },
+                                  "email" : {
+                                    "type" : "string"
+                                  },
+                                  "role" : {
+                                    "type" : "string"
+                                  },
+                                  "createdAt" : {
+                                    "type" : "string"
+                                  },
+                                  "updatedAt" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              },
+                              "showTime" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "id" : {
+                                    "type" : "integer"
+                                  },
+                                  "cinema" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "id" : {
+                                        "type" : "integer"
+                                      },
+                                      "name" : {
+                                        "type" : "string"
+                                      },
+                                      "numOfRows" : {
+                                        "type" : "string"
+                                      },
+                                      "seatsPerRow" : {
+                                        "type" : "string"
+                                      },
+                                      "close_time" : {
+                                        "type" : "string"
+                                      },
+                                      "owner" : {
+                                        "type" : "string"
+                                      }
+                                    }
+                                  },
+                                  "display_date" : {
+                                    "type" : "string"
+                                  },
+                                  "price" : {
+                                    "type" : "number"
+                                  },
+                                  "createdAt" : {
+                                    "type" : "string"
+                                  },
+                                  "updatedAt" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              },
+                              "seat" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "id" : {
+                                    "type" : "integer"
+                                  },
+                                  "row" : {
+                                    "type" : "string"
+                                  },
+                                  "col" : {
+                                    "type" : "string"
+                                  },
+                                  "state" : {
+                                    "type" : "string"
+                                  },
+                                  "type" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              },
+                              "state" : {
+                                "type" : "string"
+                              },
+                              "createdAt" : {
+                                "type" : "string"
+                              },
+                              "updatedAt" : {
+                                "type" : "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "len" : 16,
+                      "data" : {
+                        "reservations" : [ {
+                          "id" : 9,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 3,
+                            "row" : "1",
+                            "col" : "1",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-23T03:19:11.867Z",
+                          "updatedAt" : "2026-02-23T03:19:11.867Z"
+                        }, {
+                          "id" : 10,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 2,
+                            "row" : "1",
+                            "col" : "0",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T03:32:16.522Z",
+                          "updatedAt" : "2026-02-24T03:32:16.522Z"
+                        }, {
+                          "id" : 11,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 2,
+                            "row" : "1",
+                            "col" : "0",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T03:33:47.289Z",
+                          "updatedAt" : "2026-02-24T03:33:47.289Z"
+                        }, {
+                          "id" : 12,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 2,
+                            "row" : "1",
+                            "col" : "0",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T03:33:48.739Z",
+                          "updatedAt" : "2026-02-24T03:33:48.739Z"
+                        }, {
+                          "id" : 13,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 4,
+                            "row" : "1",
+                            "col" : "2",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T03:34:26.629Z",
+                          "updatedAt" : "2026-02-24T03:34:26.629Z"
+                        }, {
+                          "id" : 14,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 5,
+                            "row" : "0",
+                            "col" : "5",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T12:32:00.431Z",
+                          "updatedAt" : "2026-02-24T12:32:00.431Z"
+                        }, {
+                          "id" : 15,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 6,
+                            "row" : "0",
+                            "col" : "1",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T13:37:48.684Z",
+                          "updatedAt" : "2026-02-24T13:37:48.684Z"
+                        }, {
+                          "id" : 16,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 7,
+                            "row" : "0",
+                            "col" : "6",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T13:39:21.587Z",
+                          "updatedAt" : "2026-02-24T13:39:21.587Z"
+                        }, {
+                          "id" : 17,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 2,
+                            "cinema" : {
+                              "id" : 5,
+                              "name" : "necrosis",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 3000.2,
+                            "createdAt" : "2026-02-23T21:14:44.752Z",
+                            "updatedAt" : "2026-02-23T21:14:44.752Z"
+                          },
+                          "seat" : {
+                            "id" : 56,
+                            "row" : "0",
+                            "col" : "5",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T13:47:23.053Z",
+                          "updatedAt" : "2026-02-24T13:47:23.053Z"
+                        }, {
+                          "id" : 18,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 2,
+                            "cinema" : {
+                              "id" : 5,
+                              "name" : "necrosis",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 3000.2,
+                            "createdAt" : "2026-02-23T21:14:44.752Z",
+                            "updatedAt" : "2026-02-23T21:14:44.752Z"
+                          },
+                          "seat" : {
+                            "id" : 51,
+                            "row" : "0",
+                            "col" : "0",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T13:47:36.167Z",
+                          "updatedAt" : "2026-02-24T13:47:36.167Z"
+                        }, {
+                          "id" : 19,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 2,
+                            "cinema" : {
+                              "id" : 5,
+                              "name" : "necrosis",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 3000.2,
+                            "createdAt" : "2026-02-23T21:14:44.752Z",
+                            "updatedAt" : "2026-02-23T21:14:44.752Z"
+                          },
+                          "seat" : {
+                            "id" : 59,
+                            "row" : "0",
+                            "col" : "8",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T13:47:40.185Z",
+                          "updatedAt" : "2026-02-24T13:47:40.185Z"
+                        }, {
+                          "id" : 20,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 2,
+                            "cinema" : {
+                              "id" : 5,
+                              "name" : "necrosis",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 3000.2,
+                            "createdAt" : "2026-02-23T21:14:44.752Z",
+                            "updatedAt" : "2026-02-23T21:14:44.752Z"
+                          },
+                          "seat" : {
+                            "id" : 92,
+                            "row" : "4",
+                            "col" : "1",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-24T13:47:48.916Z",
+                          "updatedAt" : "2026-02-24T13:47:48.916Z"
+                        }, {
+                          "id" : 21,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 2,
+                            "row" : "1",
+                            "col" : "0",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-26T13:37:33.342Z",
+                          "updatedAt" : "2026-02-26T13:37:33.342Z"
+                        }, {
+                          "id" : 22,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 2,
+                            "row" : "1",
+                            "col" : "0",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-26T13:39:02.732Z",
+                          "updatedAt" : "2026-02-26T13:39:02.732Z"
+                        }, {
+                          "id" : 23,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 2,
+                            "row" : "1",
+                            "col" : "0",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-26T13:39:03.352Z",
+                          "updatedAt" : "2026-02-26T13:39:03.352Z"
+                        }, {
+                          "id" : 24,
+                          "user" : {
+                            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                            "email" : "test@gamil.com",
+                            "role" : "admin",
+                            "createdAt" : "2026-02-23T02:57:39.858Z",
+                            "updatedAt" : "2026-02-23T02:57:39.858Z"
+                          },
+                          "showTime" : {
+                            "id" : 1,
+                            "cinema" : {
+                              "id" : 2,
+                              "name" : "collesium",
+                              "numOfRows" : "5",
+                              "seatsPerRow" : "10",
+                              "close_time" : "2026-02-20",
+                              "owner" : "tarek"
+                            },
+                            "display_date" : "2026-02-23",
+                            "price" : 2000.2,
+                            "createdAt" : "2026-02-23T02:41:45.898Z",
+                            "updatedAt" : "2026-02-23T02:41:45.898Z"
+                          },
+                          "seat" : {
+                            "id" : 8,
+                            "row" : "0",
+                            "col" : "3",
+                            "state" : "taken",
+                            "type" : "regular"
+                          },
+                          "state" : "pending",
+                          "createdAt" : "2026-02-26T17:54:13.150Z",
+                          "updatedAt" : "2026-02-26T17:54:13.150Z"
+                        } ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "get-reservations"
+      },
+      "post" : {
+        "summary" : "Create reservation",
+        "tags" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "reservation" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "integer"
+                            },
+                            "user" : {
+                              "type" : "string"
+                            },
+                            "showTime" : {
+                              "type" : "integer"
+                            },
+                            "seat" : {
+                              "type" : "integer"
+                            },
+                            "state" : {
+                              "type" : "string"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            },
+                            "updatedAt" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "data" : {
+                        "reservation" : {
+                          "id" : 25,
+                          "user" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                          "showTime" : 1,
+                          "seat" : 31,
+                          "state" : "pending",
+                          "createdAt" : "2026-03-21T00:18:52.766Z",
+                          "updatedAt" : "2026-03-21T00:18:52.766Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "post-reservations",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Reservation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup" : {
+      "post" : {
+        "summary" : "Sign up a user",
+        "tags" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "user" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "string"
+                            },
+                            "email" : {
+                              "type" : "string"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            }
+                          }
+                        },
+                        "token" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "message" : "User created successfully",
+                      "data" : {
+                        "user" : {
+                          "id" : "2c8c3518-8fd3-443f-8a5a-fa97430a0875",
+                          "email" : "bitchh@gamil.com",
+                          "createdAt" : "2026-03-21T00:04:20.327Z"
+                        },
+                        "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyYzhjMzUxOC04ZmQzLTQ0M2YtOGE1YS1mYTk3NDMwYTA4NzUiLCJlbWFpbCI6ImJpdGNoaEBnYW1pbC5jb20iLCJpYXQiOjE3NzQwNTg2NjAsImV4cCI6MTc3NDY2MzQ2MH0.N0BCt4c6Ocgb443Hkm0PQxjU3VdSe5eltJZOK7wJEdE"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "post-auth-signup",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "email" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  }
+                },
+                "x-examples" : {
+                  "Example 1" : {
+                    "email" : "bitchh@gamil.com",
+                    "password" : "hello"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "summary" : "Log in a user",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "user" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "string"
+                            },
+                            "email" : {
+                              "type" : "string"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            }
+                          }
+                        },
+                        "token" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "message" : "Logged in successfully",
+                      "data" : {
+                        "user" : {
+                          "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                          "email" : "test@gamil.com",
+                          "createdAt" : "2026-02-23T02:57:39.858Z"
+                        },
+                        "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMGU2YjJjZC1kZGMxLTQ1YmQtYmRkMy1hZWE3ZmVjODE0NDAiLCJlbWFpbCI6InRlc3RAZ2FtaWwuY29tIiwiaWF0IjoxNzc0MDU4Nzc2LCJleHAiOjE3NzQ2NjM1NzZ9.Dyt8zxqTE6-8KOFU66oXKs4ogkIlXNV60L75dGserv0"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "post-auth-login",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "email" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  }
+                },
+                "x-examples" : {
+                  "Example 1" : {
+                    "email" : "bitchh@gamil.com",
+                    "password" : "hello"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me" : {
+      "get" : {
+        "summary" : "Your GET endpoint",
+        "tags" : [ ],
+        "responses" : { },
+        "operationId" : "get-auth-me"
+      },
+      "post" : {
+        "summary" : "Get my profile",
+        "tags" : [ ],
+        "responses" : {
+          "2XX" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "user" : {
+                          "type" : "object",
+                          "properties" : {
+                            "id" : {
+                              "type" : "string"
+                            },
+                            "email" : {
+                              "type" : "string"
+                            },
+                            "role" : {
+                              "type" : "string"
+                            },
+                            "createdAt" : {
+                              "type" : "string"
+                            },
+                            "updatedAt" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples" : {
+                    "Example 1" : {
+                      "status" : "success",
+                      "data" : {
+                        "user" : {
+                          "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+                          "email" : "test@gamil.com",
+                          "role" : "admin",
+                          "createdAt" : "2026-02-23T02:57:39.858Z",
+                          "updatedAt" : "2026-02-23T02:57:39.858Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId" : "post-auth-me",
+        "parameters" : [ {
+          "schema" : {
+            "type" : "string"
+          },
+          "in" : "header",
+          "name" : "Authorization",
+          "description" : "bearer token (jwt)",
+          "required" : true
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "role" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "createdAt" : {
+            "type" : "string"
+          }
+        },
+        "x-examples" : {
+          "Example 1" : {
+            "id" : "00e6b2cd-ddc1-45bd-bdd3-aea7fec81440",
+            "email" : "test@gamil.com",
+            "role" : "user",
+            "password" : "somepassword",
+            "createdAt" : "2026-02-23T02:57:39.858Z"
+          }
+        }
+      },
+      "Tag" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "xml" : {
+          "name" : "tag"
+        }
+      },
+      "ApiResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "xml" : {
+          "name" : "##default"
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "code", "message" ]
+      },
+      "Movie" : {
+        "type" : "object",
+        "title" : "Movie",
+        "description" : "a movie ",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "title" : {
+            "type" : "string",
+            "x-stoplight" : {
+              "id" : "grbngdbj8uqwq"
+            }
+          },
+          "description" : {
+            "type" : "string",
+            "x-stoplight" : {
+              "id" : "ycbs9tvpf57v7"
+            }
+          },
+          "genre" : {
+            "type" : "string",
+            "x-stoplight" : {
+              "id" : "kn4ekxgqs2kxs"
+            }
+          },
+          "duration" : {
+            "type" : "integer",
+            "x-stoplight" : {
+              "id" : "0osvnuuw3ykib"
+            }
+          },
+          "createdAt" : {
+            "type" : "number",
+            "x-stoplight" : {
+              "id" : "16q8xqb7rts2b"
+            }
+          },
+          "updatedAt" : {
+            "type" : "number",
+            "x-stoplight" : {
+              "id" : "gssg1sf06ohd5"
+            }
+          }
+        }
+      },
+      "Cinema" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "numOfRows" : {
+            "type" : "string"
+          },
+          "seatsPerRow" : {
+            "type" : "string"
+          },
+          "close_time" : {
+            "type" : "string"
+          },
+          "owner" : {
+            "type" : "string"
+          }
+        },
+        "x-examples" : {
+          "Example 1" : {
+            "id" : 2,
+            "name" : "collesium",
+            "numOfRows" : "5",
+            "seatsPerRow" : "10",
+            "close_time" : "2026-02-20",
+            "owner" : "tarek"
+          }
+        },
+        "description" : "a cinema",
+        "title" : "Cinema"
+      },
+      "Reservation" : {
+        "type" : "object",
+        "x-examples" : {
+          "Example 1" : {
+            "id" : 15,
+            "showTime" : {
+              "id" : 1,
+              "cinema" : {
+                "id" : 2,
+                "name" : "collesium",
+                "numOfRows" : "5",
+                "seatsPerRow" : "10",
+                "close_time" : "2026-02-20",
+                "owner" : "tarek"
+              },
+              "display_date" : "2026-02-23",
+              "price" : 2000.2,
+              "createdAt" : "2026-02-23T02:41:45.898Z",
+              "updatedAt" : "2026-02-23T02:41:45.898Z"
+            },
+            "state" : "pending",
+            "createdAt" : "2026-02-24T13:37:48.684Z",
+            "updatedAt" : "2026-02-24T13:37:48.684Z"
+          }
+        },
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "showTime" : {
+            "$ref" : "#/components/schemas/Show-Time"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "createdAt" : {
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "type" : "string"
+          }
+        },
+        "description" : ""
+      },
+      "Show-Time" : {
+        "type" : "object",
+        "x-examples" : {
+          "Example 1" : {
+            "id" : 1,
+            "cinema" : { },
+            "display_date" : "2026-02-23",
+            "price" : 2000.2,
+            "createdAt" : "2026-02-23T02:41:45.898Z",
+            "updatedAt" : "2026-02-23T02:41:45.898Z"
+          }
+        },
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "cinema" : {
+            "$ref" : "#/components/schemas/Cinema"
+          },
+          "display_date" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "number"
+          },
+          "createdAt" : {
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "type" : "string"
+          }
+        },
+        "description" : ""
+      },
+      "Seat" : {
+        "type" : "object",
+        "x-examples" : {
+          "Example 1" : {
+            "id" : 52,
+            "row" : "0",
+            "col" : "1",
+            "state" : "free",
+            "type" : "regular"
+          }
+        },
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "row" : {
+            "type" : "integer"
+          },
+          "col" : {
+            "type" : "integer"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "requestBodies" : {
+      "Pet" : {
+        "description" : "Pet object that needs to be added to the store",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Pet"
+            }
+          },
+          "application/xml" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Pet"
+            }
+          }
+        }
+      },
+      "UserArray" : {
+        "description" : "List of user object",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "petstore_auth" : {
+        "type" : "oauth2",
+        "flows" : {
+          "implicit" : {
+            "authorizationUrl" : "https://petstore3.swagger.io/oauth/authorize",
+            "scopes" : {
+              "write:pets" : "modify pets in your account",
+              "read:pets" : "read your pets"
+            }
+          }
+        }
+      },
+      "api_key" : {
+        "type" : "apiKey",
+        "name" : "api_key",
+        "in" : "header"
+      }
+    }
+  }
+}
