@@ -56,7 +56,7 @@ export default function CinemasPage() {
   }
 
   return (
-    <div>
+    <div className='px-10 py-10'>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-zinc-100">Cinemas</h1>

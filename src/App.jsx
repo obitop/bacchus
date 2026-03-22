@@ -9,17 +9,19 @@ import CinemasPage from './pages/CinemasPage'
 import ReservationsPage from './pages/ReservationsPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
+import MovieShowTimesPage from './pages/MovieShowTimesPage'
 
 export default function App() {
   return (
     <AuthProvider>
       <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
         <Navbar />
-        <main className="max-w-6xl mx-auto px-4 py-8">
+        <main className="max-w mx-auto ">
           <Routes>
             <Route path="/" element={<Navigate to="/movies" replace />} />
             <Route path="/movies" element={<MoviesPage />} />
             <Route path="/movies/:id" element={<MovieDetailPage />} />
+            <Route path="/movies/:id/showtimes" element={<MovieShowTimesPage />} />
             <Route path="/showtimes" element={<ShowtimesPage />} />
             <Route path="/showtimes/:id" element={<ShowtimeDetailPage />} />
             <Route path="/cinemas" element={<CinemasPage />} />

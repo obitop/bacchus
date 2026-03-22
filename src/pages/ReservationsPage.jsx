@@ -33,7 +33,7 @@ export default function ReservationsPage() {
     if (!user) { setLoading(false); return }
     Promise.all([getReservations(), getShowtimes()])
       .then(([res, st]) => {
-        setReservations(Array.isArray(res) ? res : [])
+        setReservations(Array.isArray(res.data.reservations) ? res.data.reservations : [])
         setShowtimes(Array.isArray(st) ? st : [])
       })
       .catch((e) => setError(e.message))
@@ -52,7 +52,7 @@ export default function ReservationsPage() {
       const showtime = showtimes.find((s) => String(s.id) === String(form.showtime_id))
       const res = await createReservation({
         showTime: showtime || { id: parseInt(form.showtime_id) },
-        state: form.state,
+        seat: form.seat || 50
       })
       setReservations((prev) => [...prev, res])
       setShowModal(false)
@@ -79,7 +79,7 @@ export default function ReservationsPage() {
   }
 
   return (
-    <div>
+    <div className="px-10 py-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-zinc-100">Reservations</h1>
