@@ -106,11 +106,9 @@ export default function ShowtimeDetailPage() {
           />
         </div>
       </div>
-
     </div>
   );
 }
-
 
 /*
       <div className="bg-linear-gradient-to-br from-zinc-900 to-zinc-800 border-zinc-700 rounded-xl p-8 mt-4 space-y-8">
@@ -121,14 +119,14 @@ export default function ShowtimeDetailPage() {
           <h1 className="text-3xl font-bold text-zinc-100 mb-2">
             {showtime.movie?.title || "Untitled Movie"}
           </h1>
-          <p className="text-lg text-amber-400 font-medium">
+          <p className="text-lg text-(--main-color) font-medium">
             {formatDate(showtime.display_date)}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-zinc-800/60 rounded-lg p-6 text-center">
-            <div className="text-3xl font-bold text-amber-400 mb-2">
+            <div className="text-3xl font-bold text-(--main-color) mb-2">
               {showtime.price != null
                 ? `$${Number(showtime.price).toFixed(2)}`
                 : "—"}
@@ -243,7 +241,7 @@ export default function ShowtimeDetailPage() {
                                     : selectedSeats.some(
                                           (s) => s.id === seat.id,
                                         )
-                                      ? "bg-amber-400 text-zinc-900"
+                                      ? "bg-(--main-color) text-zinc-900"
                                       : "bg-zinc-700 hover:bg-zinc-600 text-zinc-300"
                                 }`}
                               >
@@ -261,7 +259,7 @@ export default function ShowtimeDetailPage() {
                     <span>Available</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 bg-amber-400 rounded"></div>
+                    <div className="w-4 h-4 bg-(--main-color) rounded"></div>
                     <span>Selected</span>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -270,14 +268,14 @@ export default function ShowtimeDetailPage() {
                   </div>
                 </div>
                 {selectedSeats.length > 0 && (
-                  <div className="mt-4 p-4 bg-amber-400/10 border border-amber-400/20 rounded-lg">
+                  <div className="mt-4 p-4 bg-(--main-color)/10 border border-(--main-color)/20 rounded-lg">
                     <p className="text-sm text-zinc-300 mb-2">
                       Selected Seats:{" "}
                       {selectedSeats
                         .map((s) => `${RowtoLetter[s.row] || s.row}${s.col}`)
                         .join(", ")}
                     </p>
-                    <p className="text-sm text-amber-400 font-medium">
+                    <p className="text-sm text-(--main-color) font-medium">
                       Total: $
                       {(selectedSeats.length * (showtime.price || 0)).toFixed(
                         2,
@@ -305,7 +303,7 @@ export default function ShowtimeDetailPage() {
       <div className="mt-4">
         <Link
           to="/reservations"
-          className="text-amber-400 hover:text-amber-300 text-sm font-medium"
+          className="text-(--main-color) hover:opacity-80 text-sm font-medium"
         >
           Make a reservation →
         </Link>

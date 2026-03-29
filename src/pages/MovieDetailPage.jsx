@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, NavLink } from "react-router-dom";
 import {
   getMovie,
   deleteMovie,
@@ -9,6 +9,8 @@ import {
 import { useAuth } from "../AuthContext";
 import Spinner from "../components/Spinner";
 import ErrorMsg from "../components/ErrorMsg";
+
+import { Ticket } from "lucide-react";
 
 function formatDate(str) {
   if (!str) return "—";
@@ -71,7 +73,17 @@ export default function MovieDetailPage() {
             style={{ backgroundImage: `url(${movieDetails.Poster})` }}
           />
         )}
-        <div className="relative z-10 px-4 py-16">
+
+        <div className="relative z-10 px-20 py-16">
+          <div className="absolute top-30/100 left-80/100 ">
+            <NavLink
+              to={`/movies/${movie.id}/showtimes`}
+              className="bg-(--main-color) text-zinc-900 font-semibold px-6 py-3 rounded-xl hover:opacity-80 transition-colors text-sm"
+            >
+              Book a ticket <Ticket className="w-5 h-5 inline-block" />
+            </NavLink>
+          </div>
+
           <div className="flex flex-col md:flex-row items-end gap-8">
             {movieDetails?.Poster && movieDetails.Poster !== "N/A" && (
               <div className="flex-shrink-0">
@@ -88,7 +100,7 @@ export default function MovieDetailPage() {
               </h1>
               <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-6">
                 {movieDetails?.Year && (
-                  <span className="px-4 py-2 bg-amber-500/20 text-amber-300 rounded-full text-sm font-medium border border-amber-500/30">
+                  <span className="px-4 py-2 bg-(--main-color)/20 text-(--main-color) rounded-full text-sm font-medium border border-(--main-color)/30">
                     {movieDetails.Year}
                   </span>
                 )}
@@ -116,9 +128,6 @@ export default function MovieDetailPage() {
               )}
             </div>
           </div>
-
-          
-
         </div>
       </div>
 
@@ -130,7 +139,7 @@ export default function MovieDetailPage() {
             {/* Synopsis */}
             {movie.description && (
               <div className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-lg p-8">
-                <h2 className="text-2xl font-bold text-white-400 mb-4">
+                <h2 className="text-2xl font-bold text-(--main-color) mb-4">
                   Summary
                 </h2>
                 <p className="text-white leading-relaxed">
@@ -209,7 +218,7 @@ export default function MovieDetailPage() {
                       <span className="text-zinc-300 font-medium">
                         {rating.Source}
                       </span>
-                      <span className="text-amber-400 font-bold">
+                      <span className="text-(--main-color) font-bold">
                         {rating.Value}
                       </span>
                     </div>
@@ -266,11 +275,11 @@ export default function MovieDetailPage() {
                 <Link
                   key={st.id}
                   to={`/showtimes/${st.id}`}
-                  className="group bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-1xl p-6 hover:border-amber-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/10"
+                  className="group bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-1xl p-6 hover:border-(--main-color)/50 transition-all duration-300 hover:shadow-lg hover:shadow-(--main-color)/10"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors">
+                      <h3 className="text-lg font-bold text-white group-hover:text-(--main-color) transition-colors">
                         {st.cinema?.name || `Cinema #${st.cinema?.id || "—"}`}
                       </h3>
                       <p className="text-zinc-400 text-sm mt-1">
@@ -278,7 +287,7 @@ export default function MovieDetailPage() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-amber-400">
+                      <p className="text-2xl font-bold text-(--main-color)">
                         {st.price != null
                           ? `$${Number(st.price).toFixed(2)}`
                           : "—"}
@@ -299,7 +308,7 @@ export default function MovieDetailPage() {
         <div className="mt-8 text-center">
           <Link
             to="/showtimes"
-            className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-medium transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-(--main-color) hover:opacity-80 font-medium transition-colors duration-200"
           >
             View all showtimes
             <svg

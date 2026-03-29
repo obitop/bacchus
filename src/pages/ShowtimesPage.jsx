@@ -79,7 +79,7 @@ export default function ShowtimesPage() {
         {user && (
           <button
             onClick={() => setShowModal(true)}
-            className="bg-amber-400 text-zinc-900 font-semibold px-4 py-2 rounded-lg hover:bg-amber-300 transition-colors text-sm"
+            className="bg-(--main-color) text-zinc-900 font-semibold px-4 py-2 rounded-lg hover:opacity-80 transition-colors text-sm"
           >
             + Add Showtime
           </button>
@@ -100,11 +100,11 @@ export default function ShowtimesPage() {
           <Link
             key={st.id}
             to={`/showtimes/${st.id}`}
-            className="block bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-700 rounded-sm p-6 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-400/10 transition-all duration-300 group"
+            className="block bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-700 rounded-sm p-6 hover:border-(--main-color) hover:shadow-lg hover:shadow-(--main-color)/10 transition-all duration-300 group"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-zinc-100 group-hover:text-amber-400 transition-colors mb-1">
+                <h3 className="text-lg font-semibold text-zinc-100 group-hover:text-(--main-color) transition-colors mb-1">
                   {st.movie?.title || "No Movie Assigned"}
                 </h3>
                 <p className="text-sm text-zinc-400 mb-2">
@@ -128,7 +128,7 @@ export default function ShowtimesPage() {
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-amber-400 mb-1">
+                <div className="text-2xl font-bold text-(--main-color) mb-1">
                   {st.price != null ? `$${Number(st.price).toFixed(2)}` : "—"}
                 </div>
                 <div className="text-xs text-zinc-600">ID #{st.id}</div>
@@ -140,7 +140,7 @@ export default function ShowtimesPage() {
                   ? `${st.cinema.numOfRows}×${st.cinema.seatsPerRow} seats`
                   : "Seating info unavailable"}
               </span>
-              <span className="group-hover:text-amber-400 transition-colors">
+              <span className="group-hover:text-(--main-color) transition-colors">
                 View Details →
               </span>
             </div>
@@ -175,7 +175,7 @@ export default function ShowtimesPage() {
                 <input
                   type="number"
                   placeholder="Cinema ID"
-                  className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-400"
+                  className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-(--main-color)"
                   value={form.cinema_id}
                   onChange={(e) =>
                     setForm({ ...form, cinema_id: e.target.value })
@@ -216,7 +216,7 @@ export default function ShowtimesPage() {
               </label>
               <input
                 type="datetime-local"
-                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-400"
+                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-(--main-color)"
                 value={form.display_date}
                 onChange={(e) =>
                   setForm({ ...form, display_date: e.target.value })
@@ -231,7 +231,7 @@ export default function ShowtimesPage() {
                 type="number"
                 min="0"
                 step="0.01"
-                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-400"
+                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:border-(--main-color)"
                 value={form.price}
                 onChange={(e) => setForm({ ...form, price: e.target.value })}
               />
@@ -239,7 +239,7 @@ export default function ShowtimesPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-amber-400 text-zinc-900 font-semibold py-2 rounded-lg hover:bg-amber-300 transition-colors text-sm disabled:opacity-50"
+              className="w-full bg-(--main-color) text-zinc-900 font-semibold py-2 rounded-lg hover:opacity-80 transition-colors text-sm disabled:opacity-50"
             >
               {submitting ? "Scheduling…" : "Schedule Showtime"}
             </button>

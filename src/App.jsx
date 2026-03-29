@@ -14,7 +14,7 @@ import MovieShowTimesPage from './pages/MovieShowTimesPage'
 export default function App() {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
+      <div className="min-h-screen bg-(--main-dark) text-zinc-100 font-mono">
         <Navbar />
         <main className="max-w mx-auto ">
           <Routes>

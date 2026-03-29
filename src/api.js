@@ -1,4 +1,5 @@
-const BASE_URL = "https://kd441fh1-4000.uks1.devtunnels.ms";
+// const BASE_URL = "https://kd441fh1-4000.uks1.devtunnels.ms";
+const BASE_URL = "http://localhost:4000";
 
 function getToken() {
   return localStorage.getItem("token");
