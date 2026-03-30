@@ -74,14 +74,6 @@ export default function CinemasPage() {
           <h1 className="text-2xl font-bold text-zinc-100">Cinemas</h1>
           <p className="text-sm text-zinc-500 mt-1">Available venues</p>
         </div>
-        {user && (
-          <button
-            onClick={() => setShowModal(true)}
-            className="bg-(--main-color) text-zinc-900 font-semibold px-4 py-2 rounded-lg hover:opacity-80 transition-colors text-sm"
-          >
-            + Add Cinema
-          </button>
-        )}
       </div>
 
       {loading && <Spinner />}

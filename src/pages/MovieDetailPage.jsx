@@ -66,7 +66,7 @@ export default function MovieDetailPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
       {/* Hero Section */}
-      <div className="relative overflow-hidden px-7">
+      <div className="relative overflow-hidden px-0 sm:px-7">
         {movieDetails?.Poster && movieDetails.Poster !== "N/A" && (
           <div
             className="absolute inset-0 bg-cover bg-center opacity-30 blur-xl scale-300"
@@ -74,11 +74,11 @@ export default function MovieDetailPage() {
           />
         )}
 
-        <div className="relative z-10 px-20 py-16">
-          <div className="absolute top-30/100 left-80/100 ">
+        <div className="relative z-10 px-10 sm:px-20 py-16">
+          <div className="absolute bottom-5 left-1/4 md:top-30/100 md:left-80/100 ">
             <NavLink
               to={`/movies/${movie.id}/showtimes`}
-              className="bg-(--main-color) text-zinc-900 font-semibold px-6 py-3 rounded-xl hover:opacity-80 transition-colors text-sm"
+              className="bg-(--main-color) text-zinc-900 font-semibold px-6 py-3 rounded-xl hover:opacity-80 transition-colors text-sm "
             >
               Book a ticket <Ticket className="w-5 h-5 inline-block" />
             </NavLink>
@@ -86,7 +86,7 @@ export default function MovieDetailPage() {
 
           <div className="flex flex-col md:flex-row items-end gap-8">
             {movieDetails?.Poster && movieDetails.Poster !== "N/A" && (
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 left-20 md:-ml-0 ">
                 <img
                   src={movieDetails.Poster}
                   alt={`${movieDetails.Title} poster`}
@@ -122,7 +122,7 @@ export default function MovieDetailPage() {
                   )}
               </div>
               {movieDetails?.Plot && movieDetails.Plot !== "N/A" && (
-                <p className="text-zinc-300 text-lg leading-relaxed max-w-2xl">
+                <p className="text-zinc-300 text-s md:text-lg leading-relaxed max-w-2xl">
                   {movieDetails.Plot}
                 </p>
               )}

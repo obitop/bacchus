@@ -85,12 +85,12 @@ export default function ReservationsPage() {
           <h1 className="text-2xl font-bold text-zinc-100">Reservations</h1>
           <p className="text-sm text-zinc-500 mt-1">Your booked seats</p>
         </div>
-        <button
+        {/* <button
           onClick={() => setShowModal(true)}
           className="bg-amber-400 text-zinc-900 font-semibold px-4 py-2 rounded-lg hover:bg-amber-300 transition-colors text-sm"
         >
           + New Reservation
-        </button>
+        </button> */}
       </div>
 
       {loading && <Spinner />}
@@ -99,7 +99,7 @@ export default function ReservationsPage() {
       {!loading && !error && reservations.length === 0 && (
         <div className="text-center py-16">
           <p className="text-zinc-500 mb-4">No reservations yet.</p>
-          <Link to="/showtimes" className="text-amber-400 hover:text-amber-300 text-sm font-medium">
+          <Link to="/showtimes" className="text-(--main-color) hover:text-amber-300 text-sm font-medium">
             Browse showtimes →
           </Link>
         </div>
@@ -124,7 +124,7 @@ export default function ReservationsPage() {
                     <p className="text-sm text-zinc-500 mt-0.5">{formatDate(showtime.display_date)}</p>
                   )}
                   {showtime.price != null && (
-                    <p className="text-sm text-amber-400 mt-0.5">${Number(showtime.price).toFixed(2)}</p>
+                    <p className="text-sm text-(--main-color) mt-0.5">${Number(showtime.price).toFixed(2)}</p>
                   )}
                 </div>
                 <span className={`text-xs px-2.5 py-1 rounded-full border ${stateClass} capitalize`}>

@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getMovies, createMovie, deleteMovie } from "../api";
+import {
+  getMovies,
+  createMovie,
+  deleteMovie,
+  omdbGetMovieDetails,
+} from "../api";
 import { useAuth } from "../AuthContext";
 import Spinner from "../components/Spinner";
 import ErrorMsg from "../components/ErrorMsg";
@@ -45,9 +50,21 @@ export default function MoviesPage() {
 
   useEffect(() => {
     getMovies()
-      .then((movies) => setMovies(movies))
+      .then((movies) => {
+        movies.map(async (movie) => {
+          const details = await omdbGetMovieDetails(movie.imdb_id);
+          movie.details = details;
+          setMovies((prev) => [
+            ...prev.filter((m) => m.id !== movie.id),
+            movie,
+          ]);
+          return movie;
+        });
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
+
+    setMovies(movies);
   }, []);
 
   async function handleCreate(e) {
@@ -93,14 +110,6 @@ export default function MoviesPage() {
           <h1 className="text-2xl font-bold text-zinc-100">Movies</h1>
           <p className="text-sm text-zinc-500 mt-1">Browse the full catalog</p>
         </div>
-        {user && (
-          <button
-            onClick={() => setShowModal(true)}
-            className="bg-amber-400 text-zinc-900 font-semibold px-4 py-2 rounded-lg hover:bg-amber-300 transition-colors text-sm"
-          >
-            + Add Movie
-          </button>
-        )}
       </div>
 
       {loading && <Spinner />}
@@ -110,41 +119,51 @@ export default function MoviesPage() {
         <p className="text-zinc-500 text-center py-16">No movies yet.</p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {movies.map((movie) => (
           <Link
             key={movie.id}
             to={`/movies/${movie.id}`}
-            className="group bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-600 transition-all hover:-translate-y-0.5"
+            className="group w-full border bg-(--secondary-dark) hover:shadow-xl hover:shadow-zinc-800  border-zinc-800 rounded-xl hover:border-(--main-color) transition-all hover:-translate-y-1.5"
           >
-            <div className="flex items-start justify-between mb-3">
-              <h2 className="font-semibold text-zinc-100 group-hover:text-amber-400 transition-colors">
-                {movie.title}
-              </h2>
-              {user && (
-                <button
-                  onClick={(e) => handleDelete(movie.id, e)}
-                  className="text-zinc-600 hover:text-red-400 transition-colors text-xs ml-2 shrink-0"
-                >
-                  ✕
-                </button>
+            {movie.details?.Poster && movie.details?.Poster !== "N/A" && (
+              <div className="flex-shrink-0">
+                <img
+                  src={movie.details?.Poster}
+                  alt={`${movie.details?.Title} Poster`}
+                  className="w-full h-80 object-cover rounded-t-xl"
+                />
+              </div>
+            )}
+
+            <div className="p-4">
+              <div className="flex items-start justify-between mb-3">
+                <h2 className="font-bold text-zinc-100 group-hover:text-(--main-color) transition-colors">
+                  {movie.title}
+                </h2>
+              </div>
+              {movie.details?.Genre && (
+                movie.details?.Genre.split(",").map((g) => (
+                  <span
+                    key={g}
+                    className={`text-xs px-3.5 mt-0 py-1 mx-1 rounded-full ${GENRE_COLORS[g.trim()] || "bg-zinc-700 text-zinc-400"}`}
+                  >
+                    {g.trim()}
+                  </span>
+                ))
               )}
+              {movie.description && (
+                <p className="text-zinc-500 text-sm mt-3 line-clamp-2">
+                  {movie.description}
+                </p>
+              )}
+              {movie.duration && (
+                <p className="text-zinc-600 text-xs mt-3">
+                  {movie.duration} min
+                </p>
+              )}
+              
             </div>
-            {movie.genre && (
-              <span
-                className={`text-xs px-2 py-0.5 rounded-full ${GENRE_COLORS[movie.genre] || "bg-zinc-800 text-zinc-400"}`}
-              >
-                {movie.genre}
-              </span>
-            )}
-            {movie.description && (
-              <p className="text-zinc-500 text-sm mt-3 line-clamp-2">
-                {movie.description}
-              </p>
-            )}
-            {movie.duration && (
-              <p className="text-zinc-600 text-xs mt-3">{movie.duration} min</p>
-            )}
           </Link>
         ))}
       </div>

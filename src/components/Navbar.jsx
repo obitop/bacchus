@@ -16,15 +16,15 @@ export default function Navbar() {
     }`;
 
   return (
-    <nav className="border-b border-zinc-800 bg-(--main-dark) backdrop-blur sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+    <nav className=" absolute top-0 bg-none  bg-transparent  sticky top-0 z-50">
+      <div className="max-w-full mx-auto px-4 h-14 flex items-center justify-between">
         <Link
           to="/movies"
           className="text-(--main-color) font-bold text-lg tracking-tight"
         >
           🎬 Bacchus
         </Link>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-6">
           <NavLink to="/movies" className={linkClass}>
             Movies
           </NavLink>

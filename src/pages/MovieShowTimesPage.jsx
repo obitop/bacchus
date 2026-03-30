@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo, act } from "react";
 import { getMovieShowTimes, getMovie, omdbGetMovieDetails } from "../api";
 import Spinner from "../components/Spinner";
 import ErrorMsg from "../components/ErrorMsg";
-import {CodeXml, X} from "lucide-react";
+import { CodeXml, X } from "lucide-react";
 
 const RowToLetter = (row) => String.fromCharCode(65 + row - 1);
 
@@ -59,6 +59,11 @@ function groupByDate(showtimes) {
   }, {});
 }
 
+function isSeatReserved(seat, reservations) {
+  if (!reservations) return false;
+  return reservations.some((res) => res.seat.id == seat.id);
+}
+
 export default function MovieShowTimesPage() {
   const { id } = useParams();
   const [showtimes, setShowtimes] = useState([]);
@@ -102,12 +107,22 @@ export default function MovieShowTimesPage() {
 
   console.log("Grouped showtimes by date:", groupedDates);
 
-  const toggleSeatSelection = (seat) => {
-    if (seat.state !== "free") return;
+  /// IMPORTANT
+  /// selectedSeeats : [ {seat , selectedShowTime} , ...]
+
+  const toggleSeatSelection = ({ seat, selectedShowTime }) => {
     setSelectedSeats((prev) =>
-      prev.some((s) => s.id === seat.id)
-        ? prev.filter((s) => s.id !== seat.id)
-        : [...prev, seat],
+      prev.some(
+        (s) =>
+          s.seat.id === seat.id &&
+          s.selectedShowTime.id === selectedShowTime.id,
+      )
+        ? prev.filter(
+            (s) =>
+              s.seat.id !== seat.id ||
+              s.selectedShowTime.id !== selectedShowTime.id,
+          )
+        : [...prev, { seat, selectedShowTime }],
     );
   };
 
@@ -166,7 +181,7 @@ export default function MovieShowTimesPage() {
 
       {/*Date selection */}
 
-      <div className="border-b border-zinc-600 flex flex-row  justify-between from-(--main-dark) to-zinc-900 px-40">
+      <div className="border-b border-zinc-600 flex flex-col sm:flex-col md:flex-col  justify-between from-(--main-dark) to-zinc-900 px-0 sm:px-40">
         <div className="flex flex-start justify-center flex-none overflow-x-auto ">
           {Object.keys(groupedDates).map((dk) => {
             // dk = e.g. "Mon, Mar 22"  or  "Sun, Mar 22"
@@ -191,9 +206,16 @@ export default function MovieShowTimesPage() {
                 })
               : dk.split(" ")[1];
 
-            const active = firstShowTimeDate && firstShowTimeDate.getTime() === selectedDate.getTime();
+            const active =
+              firstShowTimeDate &&
+              firstShowTimeDate.getTime() === selectedDate.getTime();
 
-            console.log("firstShowTimeDate:", firstShowTimeDate, "selectedDate:", selectedDate);
+            console.log(
+              "firstShowTimeDate:",
+              firstShowTimeDate,
+              "selectedDate:",
+              selectedDate,
+            );
             console.log("active:", active);
             return (
               <button
@@ -220,22 +242,24 @@ export default function MovieShowTimesPage() {
         <div className="flex flex-row">
           {selectedDate ? (
             <div className="flex flex-row ">
-              {(groupedDates[
-                selectedDate.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  weekday: "short",
-                })
-              ] || []).map((st) => (
+              {(
+                groupedDates[
+                  selectedDate.toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    weekday: "short",
+                  })
+                ] || []
+              ).map((st) => (
                 <button
                   key={st.id}
-                  className="px-8 py-2 flex flex-col items-center justify-center text-lg hover:bg-zinc-800 transition-colors hover:before-"
+                  className={`px-5 mx-3 py-2 flex flex-col items-center justify-center text-lg transition-colors opacity-80 ${selectedShowTime == st ? "opacity-100" : " "} hover:opacity-100 rounded  ${selectedShowTime == st ? "border-b-2 border-(--main-color)" : ""} `}
                   onClick={() => setSelectedShowTime(st)}
                 >
                   <span className="text-(--main-color) font-bold text-lg mb-2">
                     {st.cinema.name}
                   </span>
-                  <span>
+                  <span className="opacity-100">
                     {new Date(st.display_date).toLocaleTimeString("en-US", {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -253,8 +277,8 @@ export default function MovieShowTimesPage() {
       </div>
 
       {selectedShowTime && (
-        <div className=" bg-(--main-dark) grid grid-cols-6">
-          <div className="col-span-4">
+        <div className=" bg-(--main-dark) grid sm:grid-cols-1 md:grid-cols-6">
+          <div className="sm:col-span:1 md:col-span-4">
             <div className="bg-(--main-dark) p-6">
               {selectedShowTime.cinema.seats.length === 0 ? (
                 <p className="text-zinc-400 text-center">Loading seats...</p>
@@ -262,7 +286,7 @@ export default function MovieShowTimesPage() {
                 <div className="space-y-4">
                   <div className="text-center mb-15">
                     <div className="w-full h-5 relative overflow-hidden flex justify-center">
-                      <div className="absolute  w-400 h-300 rounded-full border-3 border-(--main-color) shadow-lg"></div>
+                      <div className="absolute  w-100 h-60 md:w-400 md:h-300 rounded-full border-3 border-(--main-color) shadow-lg"></div>
                     </div>
                     <p className="text-sm text-zinc-400 mt-4">SCREEN</p>
                   </div>
@@ -283,13 +307,27 @@ export default function MovieShowTimesPage() {
                               <div key={seat.id}>
                                 <button
                                   key={seat.id}
-                                  onClick={() => toggleSeatSelection(seat)}
-                                  disabled={seat.state !== "free"}
+                                  onClick={() =>
+                                    toggleSeatSelection({
+                                      seat,
+                                      selectedShowTime,
+                                    })
+                                  }
+                                  disabled={isSeatReserved(
+                                    seat,
+                                    selectedShowTime.seatReservations,
+                                  )}
                                   className={`w-8 h-8 rounded text-xs font-medium transition-all ${
-                                    seat.state !== "free"
+                                    isSeatReserved(
+                                      seat,
+                                      selectedShowTime.seatReservations,
+                                    )
                                       ? "bg-zinc-600 text-zinc-500 cursor-not-allowed"
                                       : selectedSeats.some(
-                                            (s) => s.id === seat.id,
+                                            (s) =>
+                                              s.seat.id === seat.id &&
+                                              s.selectedShowTime.id ===
+                                                selectedShowTime.id,
                                           )
                                         ? "bg-(--main-color) text-zinc-900"
                                         : "bg-zinc-700 hover:bg-zinc-600 text-zinc-300"
@@ -300,13 +338,19 @@ export default function MovieShowTimesPage() {
                                 <span
                                   className={`max-w-xs h-1 rounded text-xs font-small transition-all flex items-center 
                                     justify-center ${
-                                      seat.state === "free"
+                                      !isSeatReserved(
+                                        seat,
+                                        selectedShowTime.seatReservations,
+                                      )
                                         ? selectedSeats.some(
-                                            (s) => s.id === seat.id,
+                                            (s) =>
+                                              s.seat.id === seat.id &&
+                                              s.selectedShowTime.id ===
+                                                selectedShowTime.id,
                                           )
                                           ? "bg-(--main-color)"
-                                          : "bg-zinc-700"
-                                        : "bg-zinc-600"
+                                          : "bg-zinc-600"
+                                        : "bg-zinc-700"
                                     }
                                 }`}
                                 ></span>
@@ -339,36 +383,45 @@ export default function MovieShowTimesPage() {
           </div>
 
           {/* selected seats */}
-          <div className="col-span-2 mx-10 mt-5 bg-(--secondary-color) bg-zinc-800 px-4 py-6 rounded rounded-lg">
-            <div>
-              {selectedSeats.map((seat) => {
-                console.log(seat);
-                return (
-                  <div className="flex flex-row bg-zinc-900 justify-between rounded border-1 border-(--main-color) px-5 py-1 mb-2">
-                    <div className="flex">
-                      <div className="text-zinc-700">
-                        <span>{RowtoLetter[seat.row]}</span>
-                        <span>{seat.col}</span>
+          <div className="col-span-2 relative mx-10 mt-5 bg-(--secondary-color) bg-zinc-800 px-4 py-6 rounded rounded-lg flex flex-col justify-between">
+            <div className="">
+              {selectedSeats
+                .filter((s) => s.selectedShowTime.id === selectedShowTime.id)
+                .map(({ seat, selectedShowTime }) => {
+                  console.log(seat);
+                  return (
+                    <div className="flex flex-row bg-zinc-900 justify-between rounded border-1 border-(--main-color) px-5 py-1 mb-2">
+                      <div className="flex">
+                        <div className="text-zinc-700">
+                          <span>{RowtoLetter[seat.row]}</span>
+                          <span>{seat.col}</span>
+                        </div>
+
+                        <div className="ml-4 text-zinc-500">
+                          <span>{seat.type}</span>
+                        </div>
                       </div>
 
-                      <div className="ml-4 text-zinc-500">
-                        <span>
-                        {seat.type}
-                        </span>
-                      </div>
+                      <button
+                        onClick={() =>
+                          toggleSeatSelection({ seat, selectedShowTime })
+                        }
+                        className="text-(--main-color) hover:text-red-700 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
                     </div>
-
-                    <button
-                      onClick={() => toggleSeatSelection(seat)}
-                      className="text-(--main-color) hover:text-red-700 transition-colors"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
+
+            {
+              <button
+                className={`w-full bottom-2 bg-(--main-color) text-zinc-900 font-semibold py-2 rounded-lg hover:opacity-90 transition-colors mt-4 ${selectedSeats.length === 0 ? "opacity-50 cursor-not-allowed hover:opacity-50" : ""}`}
+              >
+                Proceed to Payment
+              </button>
+            }
           </div>
         </div>
       )}
