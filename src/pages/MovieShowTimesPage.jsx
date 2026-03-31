@@ -383,7 +383,7 @@ export default function MovieShowTimesPage() {
           </div>
 
           {/* selected seats */}
-          <div className="col-span-2 relative mx-10 mt-5 bg-(--secondary-color) bg-zinc-800 px-4 py-6 rounded rounded-lg flex flex-col justify-between">
+          <div className="col-span-2 h-min-2xl h-fit relative mx-10 mt-5 bg-(--secondary-color) bg-zinc-800 px-4 py-6 rounded rounded-lg flex flex-col justify-between">
             <div className="">
               {selectedSeats
                 .filter((s) => s.selectedShowTime.id === selectedShowTime.id)

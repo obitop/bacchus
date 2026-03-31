@@ -1,5 +1,6 @@
 // const BASE_URL = "https://kd441fh1-4000.uks1.devtunnels.ms";
-const BASE_URL = "http://localhost:4000";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://kd441fh1-4000.uks1.devtunnels.ms";
 
 function getToken() {
   return localStorage.getItem("token");
@@ -87,7 +88,7 @@ export const omdbGetMovieDetails = async (imdbId) => {
     console.error("Error fetching movie details from OMDB:", err);
     throw new Error(err.message || `HTTP ${res.status}`);
   }
-  console.log('OMDB API response :', res);
+  console.log("OMDB API response :", res);
   const content = await res.json();
   console.log("OMDB API content:", content);
   if (content.Response === "False") {
