@@ -16,7 +16,7 @@ export default function Navbar() {
     }`;
 
   return (
-    <nav className=" absolute top-0 bg-none  bg-transparent  sticky top-0 z-50">
+    <nav className=" absolute top-0 bg-none bg-transparent  sticky top-0 z-50">
       <div className="max-w-full mx-auto px-4 h-14 flex items-center justify-between">
         <Link
           to="/movies"

@@ -126,6 +126,12 @@ export default function MovieShowTimesPage() {
     );
   };
 
+  const clearShowTimeSelectedSeats = (showTime) => {
+    setSelectedSeats((prev) =>
+      prev.filter((s) => s.selectedShowTime.id !== showTime.id),
+    );
+  };
+
   if (loading) return <Spinner />;
   if (error) return <ErrorMsg message={error} />;
   if (!movie) return null;
@@ -317,7 +323,7 @@ export default function MovieShowTimesPage() {
                                     seat,
                                     selectedShowTime.seatReservations,
                                   )}
-                                  className={`w-8 h-8 rounded text-xs font-medium transition-all ${
+                                  className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded text-xs font-medium transition-all ${
                                     isSeatReserved(
                                       seat,
                                       selectedShowTime.seatReservations,
@@ -384,6 +390,17 @@ export default function MovieShowTimesPage() {
 
           {/* selected seats */}
           <div className="col-span-2 h-min-2xl h-fit relative mx-10 mt-5 bg-(--secondary-color) bg-zinc-800 px-4 py-6 rounded rounded-lg flex flex-col justify-between">
+            {selectedSeats.length > 0 && (
+              <div className="mb-4">
+                <button
+                  onClick={() => clearShowTimeSelectedSeats(selectedShowTime)}
+                  className="bg-(--main-color) text-(--main-color)  px-2 py-1.5 text-sm font-semibold rounded opacity-70 text-zinc-900 hover:opacity-60 transition-colors"
+                >
+                  clear 
+                </button>
+              </div>
+            )}
+
             <div className="">
               {selectedSeats
                 .filter((s) => s.selectedShowTime.id === selectedShowTime.id)
@@ -414,6 +431,11 @@ export default function MovieShowTimesPage() {
                   );
                 })}
             </div>
+
+            {/* <p className="text-zinc-500 text-sm mt-2">
+              {selectedSeats.length} seat{selectedSeats.length !== 1 ? "s" : ""}{" "}
+              selected
+            </p> */}
 
             {
               <button

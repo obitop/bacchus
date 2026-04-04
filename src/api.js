@@ -1,6 +1,6 @@
 // const BASE_URL = "https://kd441fh1-4000.uks1.devtunnels.ms";
 const BASE_URL =
-  import.meta.env.VITE_API_URL || "https://kd441fh1-4000.uks1.devtunnels.ms";
+  import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 function getToken() {
   return localStorage.getItem("token");
